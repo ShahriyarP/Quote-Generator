@@ -10,17 +10,25 @@ const loader = document.getElementById('loader');
 const checkboxToggler = document.querySelector('input[type= "checkbox"]');
 const span = document.getElementById('span');
 
+function darkMode() {
+    span.children[0].classList.replace('fa-sun', 'fa-moon');
+    span.children[1].textContent = 'Dark Mode';
+}
+
+function lightMode() {
+    span.children[0].classList.replace('fa-moon', 'fa-sun');
+    span.children[1].textContent = 'Light Mode';
+}
 
 function changeTheme(event) {
     if (event.target.checked) {
         document.documentElement.setAttribute('data-theme', 'dark');
-        span.children[0].classList.replace('fa-sun', 'fa-moon');
-        span.children[1].textContent = 'Dark Mode'
-        console.log(span.children);
+        localStorage.setItem('theme', 'dark');
+        darkMode();
     } else {
         document.documentElement.setAttribute('data-theme', 'light');
-        span.children[0].classList.replace('fa-moon', 'fa-sun');
-        span.children[1].textContent = 'Light Mode';
+        localStorage.setItem('theme', 'light');
+        lightMode();
     }
 }
 
@@ -72,6 +80,15 @@ function tweetQuote() {
     const author = authorText.innerText;
     const twitterUrl = `https://twitter.com/intent/tweet?text=${quote} - ${author}`;
     window.open(twitterUrl, '_blank');
+}
+
+const currentTheme = localStorage.getItem('theme');
+if (currentTheme) {
+    document.documentElement.setAttribute('data-theme', currentTheme);
+    if (currentTheme === 'dark') {
+        checkboxToggler.checked = true;
+        darkMode();
+    }
 }
 
 checkboxToggler.addEventListener('change', changeTheme);

@@ -210,3 +210,7 @@ input:checked + .slider:before {
   color: var(--fa-color);
   font-size: 1.5rem;
 }
+
+.new-quote {
+  white-space: nowrap;
+}
